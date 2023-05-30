@@ -93,7 +93,6 @@ DATABASES = {
         }
     }
 }
-print(os.path.join(BASE_DIR, "../db.cnf"))
 
 
 # Password validation
@@ -140,3 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+print(f'STATICFILES_DIRS: {STATICFILES_DIRS}')
