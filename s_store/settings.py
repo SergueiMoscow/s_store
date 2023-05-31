@@ -131,9 +131,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-MEDIA_URL = os.path.join(BASE_DIR, 'media')
+
+# вариант 2
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+#     BASE_DIR / "venv/lib/python3.8/site-packages/django/contrib/admin/static",
+# ]
+# print(STATICFILES_DIRS)
