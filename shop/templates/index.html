@@ -25,15 +25,9 @@
         </td>
     </tr>
 </table>
-<table class="products">
+<div class="products">
     {% for product in products%}
-        {% cycle '<tr>' '' '' '' %}
         {% include 'product.html' %}
-        {% if forloop.last %}
-            </tr>
-        {% else %}
-            {% cycle '' '' '' '</tr>' %}
-        {% endif %}
     {% endfor %}
-</table>
+</div>
 {% endblock %}

@@ -1,14 +1,12 @@
-<td>
-    <div class="intro_product">
-        <p class="img">
-            <img src="{{ MEDIA_URL }}{{ product.image.url }}" alt="{{ product.name }}"/>
-        </p>
-        <p class="title">
-            <a href="{% url 'product' product.pk %}">{{ product.name }}</a>
-        </p>
-        <p class="price">{{ product.price }} руб.</p>
-        <p>
-            <a class="link_cart" href="https://storedvd.ru/functions.php?func=add_cart&amp;id=16"></a>
-        </p>
-    </div>
-</td>
+<div class="intro_product">
+    <p class="img">
+        <img src="{{ MEDIA_URL }}{{ product.image.url }}" alt="{{ product.name }}"/>
+    </p>
+    <p class="title">
+        <a href="{% url 'product' product.pk %}">{{ product.name }}</a>
+    </p>
+    <p class="price">{{ product.price }} руб.</p>
+    <p>
+        <a class="link_cart" href="https://storedvd.ru/functions.php?func=add_cart&amp;id=16"></a>
+    </p>
+</div>
