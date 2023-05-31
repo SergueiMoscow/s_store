@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_=wypb^+w6s*m9y-j&wt*me@*knyzii^e@f37%&&h6&c12z(9@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['zefir.ostafievo.com', '127.0.0.1']
 
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

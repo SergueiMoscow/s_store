@@ -6,7 +6,10 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 's_store.settings')
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 's_store', 'local_settings.py')):
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 's_store.local_settings')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 's_store.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
