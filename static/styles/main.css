@@ -204,9 +204,18 @@ body {
         padding-bottom: 10px;
         justify-content: center;
     }
+    #content_header {
+        display: none;
+    }
 }
 
 @media (min-width: 600px) {
+    #content_header {
+        display: block;
+    }
+}
+
+@media (min-width: 900px) {
     #left {
         display: block;
         width: 209px;
@@ -222,6 +231,17 @@ body {
     #combo_categories {
         display: none;
     }
+    #content_header {
+        display: block;
+    }
+}
+
+#content_header {
+    width: 100%;
+}
+
+#table_header {
+    width: 100%;
 }
 
 #left .header {

@@ -63,7 +63,7 @@
 	<div id="content">
 		<div id="combo_categories">
 			<select>
-				<option>Категории</option>
+				<option>Каталог</option>
 				{% for category in categories %}
 					<option>{{ category }}</option>
 				{% endfor %}
@@ -90,6 +90,7 @@
 			{% block before_content %}{% endblock %}
 			{% block content %}
 			{% endblock %}
+			{% block pagination %}{% endblock %}
 		</div>
 	</div>
 	<div id="footer">

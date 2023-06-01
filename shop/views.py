@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -86,6 +87,14 @@ def search(request):
         products = Product.objects.filter(
             Q(name__icontains=q) | Q(description__icontains=q)
         )
+        page = request.GET.get('page', 1)
+        paginator = Paginator(products, 4)
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
         context = {'products': products, 'q': q}
         return render(
             request,
