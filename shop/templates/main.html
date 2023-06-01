@@ -4,7 +4,7 @@
 <head>
 	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 	{% block title %}<title>Интернет магазин</title>{% endblock %}
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	{% block description %}{% endblock %}
 	{% block keywords %}<meta name="keywords" content="птицы, сайт птицы" />{% endblock %}
@@ -46,7 +46,7 @@
 				</li>
 			</ul>
 			<div id="search">
-				<form name="search" action="{_% url 'search' %_}" method="get">
+				<form name="search" action="{% url 'search' %}" method="get">
 					<table>
 						<tr>
 							<td class="input_left"></td>
@@ -61,6 +61,14 @@
 		</div>
 	</div>
 	<div id="content">
+		<div id="combo_categories">
+			<select>
+				<option>Категории</option>
+				{% for category in categories %}
+					<option>{{ category }}</option>
+				{% endfor %}
+			</select>
+		</div>
 		<div id="left">
 				<div class="menu">
 					<div class="header">
@@ -79,6 +87,7 @@
 
 		</div>
 		<div id="right">
+			{% block before_content %}{% endblock %}
 			{% block content %}
 			{% endblock %}
 		</div>

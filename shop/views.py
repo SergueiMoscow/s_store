@@ -1,7 +1,9 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
+from shop.forms import SearchForm
 from shop.models import Category, Product
 
 
@@ -75,3 +77,18 @@ class ProductDetailView(generic.DetailView):
 
 def handler404(request):
     return render(request, '404.html', status=404)
+
+
+def search(request):
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        q = search_form.cleaned_data['q']
+        products = Product.objects.filter(
+            Q(name__icontains=q) | Q(description__icontains=q)
+        )
+        context = {'products': products, 'q': q}
+        return render(
+            request,
+            'search.html',
+            context
+        )

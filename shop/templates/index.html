@@ -2,17 +2,20 @@
 {% block title %}<title>Главная страница</title>{% endblock %}
 {% block content %}
 <table>
-    <tr>
-        <td rowspan="2">
-            <div class="header">
-                {% block header %}<h3>Каталог</h3>{% endblock %}
-            </div>
-        </td>
-        <td class="section_bg"></td>
-        <td class="section_right"></td>
-    </tr>
+    {% block main_header %}
+        <tr>
+            <td rowspan="2">
+                <div class="header">
+                    {% block header %}<h3>Каталог</h3>{% endblock %}
+                </div>
+            </td>
+            <td class="section_bg"></td>
+            <td class="section_right"></td>
+        </tr>
+    {% endblock %}
     <tr>
         <td colspan="2">
+            {% block sort %}
             <table class="sort">
                 <tr>
                     <td>Сортировать по:</td>
@@ -22,6 +25,7 @@
                             href="{{ request.path }}?sort=name&amp;up=0">убыв.</a>)
                 </tr>
             </table>
+            {% endblock %}
         </td>
     </tr>
 </table>
