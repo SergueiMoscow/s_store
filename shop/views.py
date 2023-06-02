@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
@@ -9,6 +9,9 @@ from shop.models import Category, Product
 
 
 def index(request):
+    result = prerender(request)
+    if result:
+        return result
     products = Product.objects.all().order_by(get_order_by_products(request))[:8]
     context = {'products': products}
     # return HttpResponse('Test')
@@ -46,6 +49,9 @@ def contacts(request):
 
 
 def category(request, id):
+    result = prerender(request)
+    if result:
+        return result
     obj = get_object_or_404(Category, pk=id)
     print(obj.id)
     products = Product.objects.filter(category__exact=obj).order_by(get_order_by_products(request))[:8]
@@ -68,6 +74,12 @@ def about(request):
 class ProductDetailView(generic.DetailView):
     model = Product
 
+    def get(self, request, *args, **kwargs):
+        result = prerender(request)
+        if result:
+            return result
+        return super(ProductDetailView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['products'] = Product.objects.\
@@ -81,6 +93,9 @@ def handler404(request):
 
 
 def search(request):
+    result = prerender(request)
+    if result:
+        return result
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
         q = search_form.cleaned_data['q']
@@ -101,3 +116,16 @@ def search(request):
             'search.html',
             context
         )
+
+
+def prerender(request):
+    if request.GET.get('add_cart'):
+        product_id = request.GET.get('add_cart')
+        get_object_or_404(Product, pk=product_id)
+        cart_info = request.session.get('cart_info', {})
+        count = cart_info.get(product_id, 0)
+        count += 1
+        cart_info.update({product_id: count})
+        request.session['cart_info'] = cart_info
+        print(cart_info)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

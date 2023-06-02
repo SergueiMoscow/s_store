@@ -296,6 +296,7 @@ body {
 	background: url("../images/right_header.png") no-repeat;
 	height: 43px;
 	width: 184px;
+	background-size: 100%;
 }
 
 #right table td {

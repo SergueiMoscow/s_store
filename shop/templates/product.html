@@ -7,6 +7,6 @@
     </p>
     <p class="price">{{ product.price }} руб.</p>
     <p>
-        <a class="link_cart" href="https://storedvd.ru/functions.php?func=add_cart&amp;id=16"></a>
+        <a class="link_cart" href="{{ request.path }}?add_cart={{ product.id }}"></a>
     </p>
 </div>
