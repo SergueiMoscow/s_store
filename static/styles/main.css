@@ -29,7 +29,7 @@ body {
 }
 
 #header {
-	height: 148px;
+	width: 100%;
 }
 
 #header div {
@@ -292,10 +292,37 @@ body {
 	border-collapse: collapse;
 }
 
+@media (min-width: 300px) {
+    #right .header {
+        width: 148px;
+        padding-top: 0;
+    }
+}
+
+@media (min-width: 600px) {
+    #right .header {
+        width: auto;
+        padding-top: 10px;
+    }
+}
+
+@media (min-width: 900px) {
+    #right .header {
+        width: 148px;
+        padding-top: 0;
+    }
+}
+
+@media (min-width: 950px) {
+    #right .header {
+        width: auto;
+        padding-top: 10px;
+    }
+}
 #right .header {
 	background: url("../images/right_header.png") no-repeat;
 	height: 43px;
-	width: 184px;
+/*	width: 184px; */
 	background-size: 100%;
 }
 
@@ -746,4 +773,40 @@ form[name='reset'] table {
     border-radius: 4px;
     font-size: large;
     width: 80%;
+}
+
+/* content-header */
+#content-header {
+    display: grid;
+    height: 43px;
+    grid-template-areas: "header top top top" "header sort sort sort";
+    grid-template-columns: 184px;
+    grid-column-gap: 0;
+}
+
+.content-header-header {
+    display: flex;
+    grid-area: header;
+    width: 184px;
+    height: 43px;
+    background-image: url("../images/right_header.png");
+    justify-content: space-around;
+}
+
+.content-header-top {
+    grid-area: top;
+    background-image: url("../images/section_bg.png");
+    height: 16px;
+}
+
+.content-header-sort {
+    grid-area: sort;
+    margin-left: 0.5em;
+}
+
+.content-header-header h3 {
+    color: rgb(232, 230, 227);
+    font-style: italic;
+    font-family: Vedrana, Arial, Helvetica, sans-serif;
+    margin-top: 0.6em;
 }

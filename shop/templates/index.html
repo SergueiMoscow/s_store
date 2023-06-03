@@ -2,40 +2,21 @@
 {% block title %}<title>Главная страница</title>{% endblock %}
 {% block content %}
 {% block table_header%}
-    <div id="content_header">
-        <table id="table_header">
-            {% block main_header %}
-                <tr>
-                    <td rowspan="2">
-                        <div class="header">
-                            {% block header %}<h3>Каталог</h3>{% endblock %}
-                        </div>
-                    </td>
-                    <td class="section_bg"></td>
-                    <td class="section_right"></td>
-                </tr>
+    <div id="content-header">
+        <header class="content-header-header">{% block header %}<h3>Каталог</h3>{% endblock %}</header>
+        <top class="content-header-top"></top>
+        <sort class="content-header-sort">
+            {% block sort %}
+            Сортировать по:
+            цене (<a href="{{ request.path }}?sort=price&amp;up=1">возр.</a> | <a href="{{ request.path }}?sort=price&amp;up=0">убыв.</a>)
+            названию (<a href="{{ request.path }}?sort=name&amp;up=1">возр.</a> | <a href="{{ request.path }}?sort=name&amp;up=0">убыв.</a>)
             {% endblock %}
-            <tr>
-                <td colspan="2">
-                    {% block sort %}
-                    <table class="sort">
-                        <tr>
-                            <td>Сортировать по:</td>
-                            <td>цене (<a href="{{ request.path }}?sort=price&amp;up=1">возр.</a> | <a
-                                    href="{{ request.path }}?sort=price&amp;up=0">убыв.</a>)
-                            <td>названию (<a href="{{ request.path }}?sort=name&amp;up=1">возр.</a> | <a
-                                    href="{{ request.path }}?sort=name&amp;up=0">убыв.</a>)
-                        </tr>
-                    </table>
-                    {% endblock %}
-                </td>
-            </tr>
-        </table>
+        </sort>
     </div>
 {% endblock %}
 <div class="products">
     {% for product in products%}
-        {% include 'product.html' %}
+    {% include 'product.html' %}
     {% endfor %}
 </div>
 {% endblock %}

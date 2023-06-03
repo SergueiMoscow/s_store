@@ -21,9 +21,10 @@
 			<p class="blue">Время работы с 9:00 до 18:00<br />без перерыва и выходных</p>
 		</div>
 	<div class="cart">
+			{% load my_filters %}
 			<p class="cart_title">Корзина</p>
 			<p class="blue">Текущий заказ</p>
-			<p>В корзине <span>{{ count_in_cart }}</span> товаров<br />на сумму <span>{{ sum_in_cart }}</span> руб.</p>
+			<p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }}<br />на сумму <span>{{ sum_in_cart }}</span> руб.</p>
 			<a href="#">Перейти в крозину</a>
 		</div>
 	</div>
