@@ -27,7 +27,7 @@
             <p class="cart_title">Корзина</p>
             <p class="blue">Текущий заказ</p>
             <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }}<br/>на сумму <span>{{ sum_in_cart }}</span> руб.</p>
-            <a href="#">Перейти в крозину</a>
+            <a href="{% url 'cart' %}">Перейти в крозину</a>
         </div>
     </div>
     <div id="topmenu">

@@ -42,6 +42,14 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Описание')
     date = models.DateField(auto_now_add=True, verbose_name='Дата добавления')
 
+    count = 0
+
+    def get_count(self):
+        return self.count
+
+    def get_amount(self):
+        return self.price * self.count
+
     class Meta:
         ordering = ['-date']
         verbose_name = 'Тоавр'

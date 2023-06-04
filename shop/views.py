@@ -22,6 +22,19 @@ def index(request):
     )
 
 
+def prerender(request):
+    if request.GET.get('add_cart'):
+        product_id = request.GET.get('add_cart')
+        get_object_or_404(Product, pk=product_id)
+        cart_info = request.session.get('cart_info', {})
+        count = cart_info.get(product_id, 0)
+        count += 1
+        cart_info.update({product_id: count})
+        request.session['cart_info'] = cart_info
+        print(cart_info)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
 def get_order_by_products(request):
     order_by = '-date'
     if request.GET.__contains__('sort') and request.GET.__contains__('up'):
@@ -118,14 +131,20 @@ def search(request):
         )
 
 
-def prerender(request):
-    if request.GET.get('add_cart'):
-        product_id = request.GET.get('add_cart')
-        get_object_or_404(Product, pk=product_id)
-        cart_info = request.session.get('cart_info', {})
-        count = cart_info.get(product_id, 0)
-        count += 1
-        cart_info.update({product_id: count})
-        request.session['cart_info'] = cart_info
-        print(cart_info)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+def cart(request):
+    cart_info = request.session.get('cart_info')
+    products = []
+    if cart_info:
+        for product_id in cart_info:
+            product = get_object_or_404(Product, pk=product_id)
+            product.count = cart_info[product_id]
+            products.append(product)
+    context = {
+        'products': products,
+    }
+    return render(
+        request,
+        'cart.html',
+        context=context
+    )
+
