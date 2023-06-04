@@ -219,9 +219,9 @@ body {
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 750px) {
     #content-header {
-        display: block;
+        display: grid;
     }
 }
 
@@ -252,7 +252,7 @@ body {
         display: none;
     }
     #content-header {
-        display: block;
+        display: grid;
     }
 }
 
@@ -798,7 +798,7 @@ form[name='reset'] table {
 
 /* content-header */
 #content-header {
-    display: grid;
+    /*display: grid;*/
     height: 43px;
     grid-template-areas: "header top top top" "header sort sort sort";
     grid-template-columns: 184px;
