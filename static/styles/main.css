@@ -837,7 +837,7 @@ form[name='reset'] table {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 70px;
+    height: 54px;
 }
 
 #footer-links {
@@ -846,10 +846,15 @@ form[name='reset'] table {
     justify-content: space-around;
 }
 
-.footer-item{
+.footer-item {
     display: flex;
     filter: invert(1);
     cursor: pointer;
+}
+
+.footer-icon {
+    width: 32px;
+    height: 32px;
 }
 
 #footer-cart {
@@ -865,14 +870,15 @@ form[name='reset'] table {
 
 /* mobile search-block */
 #search_block {
-    filter: invert(1);
+    filter: invert(0);
     width: 100%;
     justify-content: center;
 }
 #search_block input {
     width: 80%;
 }
-#search_block label img {
+
+#search_block img {
     height: 32px;
     width: 32px;
 }
