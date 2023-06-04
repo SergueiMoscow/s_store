@@ -2,113 +2,153 @@
 {% load static %}
 <html>
 <head>
-	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-	{% block title %}<title>Интернет магазин</title>{% endblock %}
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	{% block description %}{% endblock %}
-	{% block keywords %}<meta name="keywords" content="птицы, сайт птицы" />{% endblock %}
-	<link rel="stylesheet" href="{% static 'styles/main.css' %}" type="text/css" media="all" />
-	<script src="{% static 'js/functions.js' %}"></script>
-	<link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% block title %}<title>Интернет магазин</title>{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {% block description %}{% endblock %}
+    {% block keywords %}
+    <meta name="keywords" content="зефир, зефирные цветы"/>
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" type="text/css" media="all"/>
+    <script src="{% static 'js/functions.js' %}"></script>
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon"/>
 </head>
 <body>
-<div id="container">
-	<div id="header">
-		<img src="{% static 'images/header_1.png' %}" alt="Шапка" />
-		<div>
-			<p class="red">+7-123-456-7890</p>
-			<p class="blue">Время работы с 9:00 до 18:00<br />без перерыва и выходных</p>
-		</div>
-	<div class="cart">
-			{% load my_filters %}
-			<p class="cart_title">Корзина</p>
-			<p class="blue">Текущий заказ</p>
-			<p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }}<br />на сумму <span>{{ sum_in_cart }}</span> руб.</p>
-			<a href="#">Перейти в крозину</a>
-		</div>
-	</div>
-		<div id="topmenu">
-			<ul>
-				<li>
-					<a href="{% url 'index' %}">ГЛАВНАЯ</a>
-				</li>
-				<li>
-					<img src="{% static 'images/topmenu_border.png' %}" alt="" />
-				</li>
-				<li>
-					<a href="{% url 'delivery' %}">ОПЛАТА И ДОСТАВКА</a>
-				</li>
-				<li>
-					<img src="{% static 'images/topmenu_border.png' %}" alt="" />
-				</li>
-				<li>
-					<a href="{% url 'contacts' %}">КОНТАКТЫ</a>
-				</li>
-			</ul>
-			<div id="search">
-				<form name="search" action="{% url 'search' %}" method="get">
-					<table>
-						<tr>
-							<td class="input_left"></td>
-							<td>
-								{{ search_form.q }}
-							</td>
-							<td class="input_right"></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div id="content">
-		<div id="combo_categories">
-			<select>
-				<option>Каталог</option>
-				{% for category in categories %}
-					<option>{{ category }}</option>
-				{% endfor %}
-			</select>
-		</div>
-		<div id="left">
-				<div class="menu">
-					<div class="header">
-						<h3>Категории</h3>
-					</div>
-					<div class="items">
-						{% for category in categories %}
-							<p>
-								<a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-<!--								{_{ section.get_absolute_url }_}-->
-							</p>
-						{% endfor %}
-					</div>
-					<div class="bottom"></div>
-				</div>
+<div id="top_container">
+    <div id="header">
+        <img src="{% static 'images/header_1.png' %}" alt="Шапка"/>
+        <div>
+            <p class="red">+7-123-456-7890</p>
+            <p class="blue">Время работы с 9:00 до 18:00<br/>без перерыва и выходных</p>
+        </div>
+        <div class="cart">
+            {% load my_filters %}
+            <p class="cart_title">Корзина</p>
+            <p class="blue">Текущий заказ</p>
+            <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }}<br/>на сумму <span>{{ sum_in_cart }}</span> руб.</p>
+            <a href="#">Перейти в крозину</a>
+        </div>
+    </div>
+    <div id="topmenu">
+        <ul>
+            <li>
+                <a href="{% url 'index' %}">ГЛАВНАЯ</a>
+            </li>
+            <li>
+                <img src="{% static 'images/topmenu_border.png' %}" alt=""/>
+            </li>
+            <li>
+                <a href="{% url 'delivery' %}">ОПЛАТА И ДОСТАВКА</a>
+            </li>
+            <li>
+                <img src="{% static 'images/topmenu_border.png' %}" alt=""/>
+            </li>
+            <li>
+                <a href="{% url 'contacts' %}">КОНТАКТЫ</a>
+            </li>
+        </ul>
+        <div id="search">
+            <form name="search" action="{% url 'search' %}" method="get">
+                <table>
+                    <tr>
+                        <td class="input_left"></td>
+                        <td>
+                            {{ search_form.q }}
+                        </td>
+                        <td class="input_right"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div id="search_block" class="search-block">
+        <label for="searchInput">
+            <img src="{% static 'images/search.png' %}">
+        </label>
+        <input type="text" id="searchInput">
+    </div>
+    <div id="combo_categories">
+        <select>
+            <option>Каталог</option>
+            {% for category in categories %}
+            <option>{{ category }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id="left">
+        <div class="menu">
+            <div class="header">
+                <h3>Категории</h3>
+            </div>
+            <div class="items">
+                {% for category in categories %}
+                <p>
+                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    <!--								{_{ section.get_absolute_url }_}-->
+                </p>
+                {% endfor %}
+            </div>
+            <div class="bottom"></div>
+        </div>
 
-		</div>
-		<div id="right">
-			{% block before_content %}{% endblock %}
-			{% block content %}
-			{% endblock %}
-			{% block pagination %}{% endblock %}
-		</div>
-	</div>
-	<div id="footer">
-		<div id="pm">
-			<table>
-				<tr>
-					<td>Способы оплаты:</td>
-					<td>
-						<img src="{% static 'images/pm.png' %}" alt="Способы оплаты" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="copy">
-			<p>Copyright &copy; Site.ru. Все права защищены.</p>
-		</div>
-	</div>
+    </div>
+    <div id="right">
+        {% block before_content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
+        {% block pagination %}{% endblock %}
+    </div>
+</div>
+<div id="footer">
+    <div id="pm">
+        <table>
+            <tr>
+                <td>Способы оплаты:</td>
+                <td>
+                    <img src="{% static 'images/pm.png' %}" alt="Способы оплаты"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="copy">
+        <p>Copyright &copy; Site.ru. Все права защищены.</p>
+    </div>
+</div>
+<footer role="contentinfo" id="footer_mobile">
+    <div id="footer-cart">
+        <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }} на сумму <span>{{ sum_in_cart }}</span> руб.</p>
+    </div>
+    <div id="footer-links">
+        <div class="footer-item">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'images/home.png' %}">
+            </a>
+        </div>
+        <div class="footer-item">
+            <a href="{% url 'delivery' %}">
+                <img src="{% static 'images/pay.png' %}">
+            </a>
+        </div>
+        <div class="footer-item">
+            <a href="#">
+                <img src="{% static 'images/shopping_cart.png' %}">
+            </a>
+        </div>
+        <div class="footer-item">
+            <a href="{% url 'contacts' %}">
+                <img src="{% static 'images/contacts.png' %}">
+            </a>
+        </div>
+        <div class="footer-item">
+            <a href="{% url 'delivery' %}">
+                <img src="{% static 'images/blog.png' %}">
+            </a>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
