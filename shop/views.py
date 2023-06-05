@@ -2,10 +2,11 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views import generic
 
 from shop.forms import SearchForm
-from shop.models import Category, Product
+from shop.models import Category, Product, Discount
 
 
 def index(request):
@@ -132,6 +133,9 @@ def search(request):
 
 
 def cart(request):
+    result = update_cart_info(request)
+    if result:
+        return result
     cart_info = request.session.get('cart_info')
     products = []
     if cart_info:
@@ -141,6 +145,7 @@ def cart(request):
             products.append(product)
     context = {
         'products': products,
+        'discount': request.session.get('discount', '')
     }
     return render(
         request,
@@ -148,3 +153,35 @@ def cart(request):
         context=context
     )
 
+
+def update_cart_info(request):
+    if request.POST:
+        cart_info = {}
+        for param in request.POST:
+            value = request.POST.get(param)
+            if param.startswith('count_') and value.isnumeric():
+                product_id = param.replace('count_', '')
+                get_object_or_404(Product, pk=product_id)
+                cart_info[product_id] = int(value)
+            elif param == 'discount' and value:
+                try:
+                    discount = Discount.objects.get(code__exact=value)
+                    request.session['discount'] = value
+                    print("Discount passed")
+                except Discount.DoesNotExist:
+                    print(f"Discount {value} not passed")
+                    pass
+
+        request.session['cart_info'] = cart_info
+
+    if request.GET:
+        cart_info = request.session.get('cart_info')
+        product_id = request.GET.get('delete_cart')
+        get_object_or_404(Product, pk=product_id)
+        current_count = cart_info.get(product_id, 0)
+        if current_count <= 1:
+            cart_info.pop(product_id)
+        else:
+            cart_info[product_id] -= 1
+        request.session['cart_info'] = cart_info
+        return HttpResponseRedirect(reverse('cart'))

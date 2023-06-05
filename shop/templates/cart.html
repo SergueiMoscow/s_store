@@ -10,6 +10,7 @@
     <h2>Корзина</h2>
     {% if products %}
     <form name="cart" action="{% url 'cart' %}" method="post">
+        {% csrf_token %}
         <table>
             <tr>
                 <td colspan="8" id="cart_top"></td>
@@ -42,7 +43,7 @@
                     <table class="count">
                         <tr>
                             <td>
-                                <input type="text" name="count_{{ product_id }}" value="{{ product.count }}"/>
+                                <input type="text" name="count_{{ product.id }}" value="{{ product.count }}"/>
                             </td>
                             <td>шт.</td>
                         </tr>
@@ -50,7 +51,7 @@
                 </td>
                 <td class="bold">{{ product.get_amount }} руб.</td>
                 <td>
-                    <a href="{{ request.path}}?delete_casrt={{ product.id }}" class="link_delete">x
+                    <a href="{{ request.path}}?delete_cart={{ product.id }}" class="link_delete">x
                         удалить</a>
                 </td>
                 <td class="cart_right"></td>
@@ -63,7 +64,7 @@
                         <tr>
                             <td>Введите номер купона со скидкой<br/><span>(если есть)</span></td>
                             <td>
-                                <input type="text" name="discount" value=""/>
+                                <input type="text" name="discount" value="{{ discount }}"/>
                             </td>
                             <td>
                                 <input type="image" src="{% static 'images/cart_discount.png' %}" alt="Получить скидку"
@@ -78,7 +79,7 @@
             <tr id="summa">
                 <td class="cart_left"></td>
                 <td colspan="6">
-                    <p>Итого : <span>{{ sum_in_cart }} руб.</span></p>
+                    <p>Итого{% if discount %} со скидкой{% endif %}: <span>{{ sum_in_cart }} руб.</span></p>
                 </td>
                 <td class="cart_right"></td>
             </tr>
