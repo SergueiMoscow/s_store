@@ -95,7 +95,7 @@
                 <td colspan="4">
                     <div class="right">
                         <input type="hidden" name="func" value="cart"/>
-                        <a href="https://storedvd.ru/order">
+                        <a href="{% url 'order' %}">
                             <img src="{% static 'images/cart_order.png' %}" alt="Оформить заказ"
                                  onmouseover="this.src='{% static 'images/cart_order_active.png' %}'"
                                  onmouseout="this.src='{% static 'images/cart_order.png' %}'"/>

@@ -1,11 +1,11 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 
-from shop.forms import SearchForm
+from shop.forms import SearchForm, OrderModelForm
 from shop.models import Category, Product, Discount
 
 
@@ -185,3 +185,16 @@ def update_cart_info(request):
             cart_info[product_id] -= 1
         request.session['cart_info'] = cart_info
         return HttpResponseRedirect(reverse('cart'))
+
+
+def order(request):
+    cart_info = request.session.get('cart_info')
+    if not cart_info:
+        raise Http404()
+    form = OrderModelForm()
+    context = {'form': form}
+    return render(
+        request,
+        'order.html',
+        context=context
+    )

@@ -11,4 +11,5 @@ urlpatterns = [
     re_path(r'product/(?P<pk>\d+)$', views.ProductDetailView.as_view(), name='product'),
     path('search', views.search, name='search'),
     path('cart', views.cart, name='cart'),
+    path('order', views.order, name='order'),
 ]
