@@ -104,7 +104,7 @@ class OrderAdmin(admin.ModelAdmin):
         }),
     )
     list_filter = ('status', 'date_order')
-    date_hierarchy = 'date_order'
+    # date_hierarchy = 'date_order'
     inlines = [OrderLinesInline]
 
 

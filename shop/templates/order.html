@@ -10,6 +10,7 @@
 <div id="order">
     <form name="order" action="{% url 'order' %}" method="post">
         {% csrf_token %}
+        {{ form.non_field_errors }}
         <table>
             <tr>
                 <td class="w120">{{ form.name.label }}:</td>

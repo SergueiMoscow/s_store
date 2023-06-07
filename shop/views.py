@@ -1,12 +1,17 @@
+import datetime
+
+import pytz as pytz
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
+
 
 from shop.forms import SearchForm, OrderModelForm
-from shop.models import Category, Product, Discount
+from shop.models import Category, Product, Discount, Order, OrderLine
 
 
 def index(request):
@@ -191,10 +196,57 @@ def order(request):
     cart_info = request.session.get('cart_info')
     if not cart_info:
         raise Http404()
-    form = OrderModelForm()
+    if request.method == 'POST':
+        form = OrderModelForm(request.POST)
+        if form.is_valid():
+            order_obj = Order()
+            order_obj.need_delivery = form.cleaned_data['delivery'] == 1
+            discount_code = request.session.get('discount')
+            if request.session.get('discount'):
+                try:
+                    discount = Discount.objects.get(code__exact=discount_code)
+                    order_obj.discount = discount
+                except Discount.DoesNotExist:
+                    pass
+            # now = datetime.datetime.now()
+            # tz = timezone.get_current_timezone()
+            # aware_datetime = timezone.make_aware(now, tz)
+
+            order_obj.name = form.cleaned_data['name']
+            order_obj.phone = form.cleaned_data['phone']
+            order_obj.email = form.cleaned_data['email']
+            order_obj.address = form.cleaned_data['address']
+            order_obj.notice = form.cleaned_data['notice']
+            # order_obj.date_order = '2023-06-07 10:00:00.23'
+            # order_obj.date_send = '2023-06-07 10:01:00.24'
+            order_obj.save()
+            add_order_lines(request, order_obj)
+            return HttpResponseRedirect(reverse('addorder'))
+    else:
+        form = OrderModelForm()
     context = {'form': form}
     return render(
         request,
         'order.html',
         context=context
+    )
+
+
+def add_order_lines(request, order_obj):
+    cart_info = request.session.get('cart_info', {})
+    for key in cart_info:
+        order_line = OrderLine()
+        order_line.order = order_obj
+        order_line.product = get_object_or_404(Product, pk=key)
+        order_line.price = order_line.product.price
+        order_line.count = cart_info[key]
+        order_line.save()
+    # request.session.clear() # Стирает всю сессию, в том числе авторизацию
+    del request.session['cart_info']
+
+
+def addorder(request):
+    return render(
+        request,
+        'addorder.html'
     )

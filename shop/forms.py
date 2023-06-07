@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from shop.models import Order
 
@@ -15,8 +16,8 @@ class OrderModelForm(forms.ModelForm):
 
     DELIVERY_CHOICES = (
         (0, 'Выберите, пожалуйста'),
-        (1, 'Самовывоз'),
-        (2, 'Доставка'),
+        (1, 'Доставка'),
+        (2, 'Самовывоз'),
     )
     delivery = forms.TypedChoiceField(
         label='Доставка',
@@ -41,4 +42,18 @@ class OrderModelForm(forms.ModelForm):
                 attrs={'rows': 6, 'cols': 80}
             )
         }
+
+    def clean_delivery(self):
+        value = self.cleaned_data['delivery']
+        print('Clear_delivery')
+        if value == 0:
+            raise ValidationError('Необходимо выбрать способ доставки')
+        return value
+
+    def clean(self):
+        address = self.cleaned_data['address']
+        delivery = self.cleaned_data['delivery']
+        if delivery == 1 and address == '':
+            raise ValidationError('Укажите адрес доставки')
+        return self.cleaned_data
 

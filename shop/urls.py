@@ -12,4 +12,6 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('cart', views.cart, name='cart'),
     path('order', views.order, name='order'),
+    path('addorder', views.addorder, name='addorder'),
+
 ]
