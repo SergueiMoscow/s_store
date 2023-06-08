@@ -1,13 +1,11 @@
 import datetime
 
-import pytz as pytz
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
-from django.utils import timezone
 
 
 from shop.forms import SearchForm, OrderModelForm

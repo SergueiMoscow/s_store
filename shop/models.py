@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from decimal import Decimal
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
@@ -140,5 +141,28 @@ class OrderLine(models.Model):
         return 'Заказ (ID {0}) {1}, {2} шт.'.format(self.order.id, self.product.name, self.count)
 
 
+class Feedback(models.Model):
+    user = models.ForeignKey(
+        User, verbose_name='Пользователь',
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True
+    )
+    client_name = models.CharField(max_length=80, verbose_name='Имя')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    email = models.EmailField()
+    message = models.TextField()
 
+    FEEDBACK_STATUSES = (
+        ('NEW', 'Новое'),
+        ('ARCHIVE', 'Архив'),
+    )
+    status = models.CharField(choices=FEEDBACK_STATUSES, max_length=20, verbose_name='Статус')
+    time = models.DateTimeField(auto_now_add=True, verbose_name='Время')
 
+    class Meta:
+        ordering = ['-time']
+        verbose_name = 'Обратная связь'
+
+    def __str__(self):
+        return f'{self.client_name} {self.message[:20]} {self.status}'
