@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from shop.models import Order
+from shop.models import Order, Feedback
 
 
 class SearchForm(forms.Form):
@@ -57,3 +57,8 @@ class OrderModelForm(forms.ModelForm):
             raise ValidationError('Укажите адрес доставки')
         return self.cleaned_data
 
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        exclude = ['status', 'time']

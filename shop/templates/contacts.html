@@ -1,8 +1,47 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block title %}<title>Контакты</title>{% endblock %}
 {% block description %}<meta name="description" content="Контакты магазина">{% endblock %}
 {% block keywords %}<meta name="keywords" content="контакты, обратная связь, администрация" />{% endblock %}
 {% block content %}
 <h2>Контакты</h2>
 <p>Тел: +7(123) 456-7890</p>
+<div id="feedback">
+    <form name="order" action="{% url 'contacts' %}" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <table>
+            <tr>
+                <td class="w120">{{ form.client_name.label }}:</td>
+                <td>{{ form.client_name }}</td>
+                <td>{{ form.client_name.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.phone.label }}:</td>
+                <td>{{ form.phone }}</td>
+                <td>{{ form.phone.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.email.label }}:</td>
+                <td>{{ form.email }}</td>
+                <td>{{ form.email.errors }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr id="message">
+                <td>
+                    <p>{{ form.message.label }}:</p>
+                    {{ form.message }}
+                </td>
+                <td>{{  form.message.errors }}</td>
+            </tr>
+            <tr>
+                <td class="button">
+                    <input type="submit" value = "Отправить"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 {% endblock %}

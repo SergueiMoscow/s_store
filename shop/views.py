@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views import generic
 
 
-from shop.forms import SearchForm, OrderModelForm
+from shop.forms import SearchForm, OrderModelForm, FeedbackForm
 from shop.models import Category, Product, Discount, Order, OrderLine
 
 
@@ -59,9 +59,12 @@ def delivery(request):
 
 
 def contacts(request):
+    form = FeedbackForm()
+    context = {'form': form}
     return render(
         request,
-        'contacts.html'
+        'contacts.html',
+        context=context
     )
 
 
