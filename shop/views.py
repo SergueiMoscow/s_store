@@ -69,6 +69,9 @@ def contacts(request):
 
 
 def category(request, id):
+    print(f'Id: {id}')
+    if id == 0:
+        return index()
     result = prerender(request)
     if result:
         return result
