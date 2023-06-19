@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="{% static 'styles/main.css' %}" type="text/css" media="all"/>
     <script src="{% static 'js/functions.js' %}"></script>
     <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon"/>
+    <script>
+        let categories = [];
+        {% for category in categories %}
+            categories.push({
+                'id': '{{ category.id }}',
+                'name': '{{ category.name }}',
+                'url': '{{ category.get_absolute_url }}'
+               });
+        {% endfor %}
+    </script>
+
 </head>
 <body>
 <div id="top_container">
@@ -71,10 +82,10 @@
         <input type="text" id="searchInput">
     </div>
     <div id="combo_categories">
-        <select>
-            <option>Каталог</option>
+        <select id="select_categories">
+            <option value="0">Каталог</option>
             {% for category in categories %}
-            <option>{{ category }}</option>
+            <option value="{{ category.id }}">{{ category }}</option>
             {% endfor %}
         </select>
     </div>
@@ -86,8 +97,8 @@
             <div class="items">
                 {% for category in categories %}
                 <p>
-                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-                    <!--								{_{ section.get_absolute_url }_}-->
+                    <a href="javascript:changeCategory({{ category.id }})">{{ category.name }}</a>
+                    <!--a href="{{ category.get_absolute_url }}">{{ category.name }}</a-->
                 </p>
                 {% endfor %}
             </div>
@@ -149,6 +160,7 @@
         </div>
     </div>
 </footer>
+<script src="{% static 'js/shop.js' %}"></script>
 
 </body>
 </html>

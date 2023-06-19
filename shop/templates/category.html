@@ -1,7 +1,18 @@
-{%extends 'index.html' %}
-{%block title %}<title>{{ category.name }}</title>{% endblock %}
-{%block description %}<meta name="description" content="Товары раздела {{ category.name }}">{% endblock %}
-{%block keywords %}<meta name="keywords" content="{{ category.name }}">{% endblock %}
-{%block header %}<h3>{{ category.name }}</h3>{% endblock %}
-
-
+{% block table_header%}
+    <div id="content-header">
+        <header class="content-header-header">{% block header %}<h3>{{ category.name }}</h3>{% endblock %}</header>
+        <top class="content-header-top"></top>
+        <sort class="content-header-sort">
+            {% block sort %}
+            Сортировать по:
+            цене (<a href="{{ request.path }}?sort=price&amp;up=1">возр.</a> | <a href="{{ request.path }}?sort=price&amp;up=0">убыв.</a>)
+            названию (<a href="{{ request.path }}?sort=name&amp;up=1">возр.</a> | <a href="{{ request.path }}?sort=name&amp;up=0">убыв.</a>)
+            {% endblock %}
+        </sort>
+    </div>
+{% endblock %}
+<div class="products">
+    {% for product in products%}
+    {% include 'product.html' %}
+    {% endfor %}
+</div>
