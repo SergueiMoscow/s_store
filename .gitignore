@@ -2,4 +2,10 @@ db.cnf
 venv
 s_readme.txt
 /images
-__pycache__
+**/__pycache__
+**/local_settings.py
+Larisa.sqlite3
+products
+*/migrations
+.idea
+db_server.cnf
