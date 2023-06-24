@@ -9,7 +9,7 @@ from django.views import generic
 
 
 from shop.forms import SearchForm, OrderModelForm, FeedbackForm
-from shop.models import Category, Product, Discount, Order, OrderLine
+from shop.models import Category, Product, Discount, Order, OrderLine, Feedback
 
 
 def index(request):
@@ -59,7 +59,23 @@ def delivery(request):
 
 
 def contacts(request):
-    form = FeedbackForm()
+    if request.POST:
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = Feedback()
+            feedback.client_name = form.cleaned_data['client_name']
+            feedback.phone = form.cleaned_data['phone']
+            feedback.email = form.cleaned_data['email']
+            feedback.message = form.cleaned_data['message']
+            feedback.status = 'New'
+            feedback.save()
+            print('saving feedback')
+            return render(
+                request,
+                'feedback_sent.html'
+            )
+    else:
+        form = FeedbackForm()
     context = {'form': form}
     return render(
         request,

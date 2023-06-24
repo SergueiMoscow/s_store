@@ -43,16 +43,20 @@ class OrderModelForm(forms.ModelForm):
             )
         }
 
-    def clean_delivery(self):
+    def clean_delivery_(self):
         value = self.cleaned_data['delivery']
         print('Clear_delivery')
         if value == 0:
+            self.add_error('Error')
             raise ValidationError('Необходимо выбрать способ доставки')
         return value
 
     def clean(self):
         address = self.cleaned_data['address']
-        delivery = self.cleaned_data['delivery']
+        try:
+            delivery = self.cleaned_data['delivery']
+        except KeyError:
+            raise ValidationError('Необходимо выбрать способ доставки')
         if delivery == 1 and address == '':
             raise ValidationError('Укажите адрес доставки')
         return self.cleaned_data
