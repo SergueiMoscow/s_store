@@ -875,9 +875,21 @@ form[name='reset'] table {
     width: 100%;
     justify-content: center;
 }
-#search_block input {
-    width: 80%;
+#search_block input[type="text"]{
+    padding: 10px;
+    width: 65%;
 }
+
+#search_block input[type="submit"]{
+    padding: 10px;
+    width: 12%;
+}
+
+
+#search_block form {
+    width: 100%;
+}
+
 
 #search_block img {
     height: 32px;

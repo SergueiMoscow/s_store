@@ -22,6 +22,7 @@
                 'url': '{{ category.get_absolute_url }}'
                });
         {% endfor %}
+
     </script>
 
 </head>
@@ -37,7 +38,8 @@
             {% load my_filters %}
             <p class="cart_title">Корзина</p>
             <p class="blue">Текущий заказ</p>
-            <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }}<br/>на сумму <span>{{ sum_in_cart }}</span> руб.</p>
+            <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }}<br/>на сумму <span>{{ sum_in_cart }}</span>
+                руб.</p>
             <a href="{% url 'cart' %}">Перейти в крозину</a>
         </div>
     </div>
@@ -75,12 +77,15 @@
     </div>
 </div>
 <div id="content">
+        <form name="search" action="{% url 'search' %}" method="get">
     <div id="search_block" class="search-block">
-        <label for="searchInput">
-            <img src="{% static 'images/search.png' %}">
-        </label>
-        <input type="text" id="searchInput">
+            <label for="searchInput">
+                <img src="{% static 'images/search.png' %}">
+            </label>
+            {{ search_form.q }}
+            <input type="submit" value="Искать">
     </div>
+        </form>
     <div id="combo_categories">
         <select id="select_categories">
             <option value="0">Каталог</option>
@@ -130,7 +135,8 @@
 </div>
 <footer role="contentinfo" id="footer_mobile">
     <div id="footer-cart">
-        <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }} на сумму <span>{{ sum_in_cart }}</span> руб.</p>
+        <p>В корзине <span>{{ count_in_cart }}</span> {{ count_in_cart|declension_of_products }} на сумму <span>{{ sum_in_cart }}</span>
+            руб.</p>
     </div>
     <div id="footer-links">
         <div class="footer-item">
