@@ -9,3 +9,4 @@ products
 */migrations
 .idea
 db_server.cnf
+.env
